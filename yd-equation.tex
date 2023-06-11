@@ -1,0 +1,184 @@
+\documentclass{ctexart}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+	\section{运动学建模及导航}
+	\subsection{运动学方程}
+    \paragraph{}运动学解算 
+	\[
+	\mathbf{F}=
+	\begin{bmatrix}
+		m[\dot{u}-vr+wq-x_g(q^2+r^2)+y_g(pg-\dot{r})+z_g(pr+\dot{q})]\\
+		m[\dot{v}-wp+ur-y_g(r^2+p^2)+z_g(qr-\dot{p})+x_g(pg+\dot{r})]\\
+		m[\dot{w}-uq+vp-z_g(p^2+q^2)+x_g(pr-\dot{q})+y_g(qr+\dot{p})]\\
+	\end{bmatrix}
+	\]
+	
+	\[\mathbf{M}=
+	\begin{bmatrix}
+		I_x\dot{p}+(I_z-I_y)qr+m[y_g(\dot{w}-uq-vp)-z_g(\dot{v}-wp+ur)]\\
+		I_y\dot{q}+(I_x-I_z)rp+m[z_g(\dot{u}+vr+wq)-x_g(\dot{w}-uq+vp)]\\
+		I_z\dot{r}+(I_y-I_x)pq+m[x_g(\dot{v}-wp+ur)-y_g(\dot{u}-vr+wq)]\\
+		
+	\end{bmatrix}
+	\]
+	\subsection{动力学方程}
+	\paragraph{}惯性水动力方程	
+	\[\begin{bmatrix}
+		F_X\\
+		F_Y\\
+		F_Z\\
+		M_X\\
+		M_Y\\
+		M_Z\\
+	\end{bmatrix}=
+	\begin{bmatrix}
+			\lambda_{11} & \lambda_{12} & \lambda_{13} & \lambda_{14} & \lambda_{15} & \lambda_{16}\\
+			\lambda_{21} & \lambda_{22} & \lambda_{23} & \lambda_{24} & \lambda_{25} & \lambda_{26}\\
+			\lambda_{31} & \lambda_{32} & \lambda_{33} & \lambda_{34} & \lambda_{35} & \lambda_{36}\\
+			\lambda_{41} & \lambda_{42} & \lambda_{43} & \lambda_{44} & \lambda_{45} & \lambda_{46}\\
+			\lambda_{51} & \lambda_{52} & \lambda_{53} & \lambda_{54} & \lambda_{55} & \lambda_{56}\\
+			\lambda_{61} & \lambda_{62} & \lambda_{63} & \lambda_{64} & \lambda_{65} & \lambda_{66}\\	
+	\end{bmatrix}
+	\begin{bmatrix}
+		\dot{u}\\
+		\dot{v}\\
+		\dot{w}\\
+		\dot{p}\\
+		\dot{q}\\
+		\dot{r}\\
+	\end{bmatrix}
+	\]
+	\[
+	\begin{bmatrix}
+		F_X\\
+		F_Y\\
+		F_Z\\
+		M_X\\
+		M_Y\\
+		M_Z\\
+	\end{bmatrix}=
+	\begin{bmatrix}
+		\lambda_{11}\dot{u}+\lambda_{12}\dot{v}+\lambda_{13}\dot{w}+\lambda_{14}\dot{p}+\lambda_{15}\dot{q}+\lambda_{16}\dot{r}\\
+		\lambda_{21}\dot{u}+\lambda_{22}\dot{v}+\lambda_{23}\dot{w}+\lambda_{24}\dot{p}+\lambda_{25}\dot{q}+\lambda_{26}\dot{r}\\
+		\lambda_{31}\dot{u}+\lambda_{32}\dot{v}+\lambda_{33}\dot{w}+\lambda_{34}\dot{p}+\lambda_{35}\dot{q}+\lambda_{36}\dot{r}\\
+		\lambda_{41}\dot{u}+\lambda_{42}\dot{v}+\lambda_{43}\dot{w}+\lambda_{44}\dot{p}+\lambda_{45}\dot{q}+\lambda_{46}\dot{r}\\
+		\lambda_{51}\dot{u}+\lambda_{52}\dot{v}+\lambda_{53}\dot{w}+\lambda_{54}\dot{p}+\lambda_{55}\dot{q}+\lambda_{56}\dot{r}\\	
+		\lambda_{61}\dot{u}+\lambda_{62}\dot{v}+\lambda_{63}\dot{w}+\lambda_{64}\dot{p}+\lambda_{65}\dot{q}+\lambda_{66}\dot{r}\\
+	\end{bmatrix}
+	\]
+	粘性水动力方程
+	\[
+		\begin{bmatrix}
+			F_X\\
+			F_Y\\
+			F_Z\\
+			M_X\\
+			M_Y\\
+			M_Z\\
+		\end{bmatrix}=
+		\begin{bmatrix}
+			v_{11}u+\mu_{11}|u|u\\
+			v_{22}v+\mu_{22}|v|v\\
+			v_{33}w+\mu_{33}|w|w\\
+			v_{44}p+\mu_{44}|p|p\\
+			v_{55}q+\mu_{55}|q|q\\
+			v_{66}r+\mu_{66}|r|r\\
+		\end{bmatrix}
+	\]
+	推力方程
+	\[
+		\begin{bmatrix}
+			T_X\\
+			T_Y\\
+			T_Z\\
+			M_X\\
+			M_Y\\
+			M_Z\\
+		\end{bmatrix} = \mathbf{T}
+		\begin{bmatrix}
+			cos(\psi)\\
+			cos(\varphi)\\
+			cos(\theta)\\
+			0\\
+			Lcos(\theta)\\
+			-Lcos(\varphi)\\
+		\end{bmatrix}
+	\]
+
+	重力和浮力
+	\[
+		\begin{bmatrix}
+			PB_X\\
+			PB_Y\\
+			PB_Z\\
+		\end{bmatrix}=
+		\begin{bmatrix}
+			0\\
+			0\\
+			P-B\\
+		\end{bmatrix}
+	\]
+	\[
+		\begin{bmatrix}
+			PB_X^{'}\\
+			PB_Y^{'}\\
+			PB_Z^{'}\\
+		\end{bmatrix}=(P-B)
+		\begin{bmatrix}
+			-sin(\theta)\\
+			cos(\theta)sin(\varphi)\\
+			cos(\theta)cos(\varphi)\\
+		\end{bmatrix}
+	\]
+	
+	\subsection{AUV空间运动数学模型}
+	\paragraph{}根据牛顿第二定律有：
+	\begin{equation}
+			F=F_F+B+P+\sum_{i=1}^nT_i+F_C=m\dot{V}_G
+	\end{equation}
+	\begin{equation}
+			M=M_F+M_B+M_P+\sum_{i=1}^nM_{Ti}+M_C=M_G+R_G*F 
+	\end{equation}
+	将1.1，1.2中的运动学方程和动力学方程带入（2）、（3）中有：
+	\begin{align*}
+		&m[\dot{u}-vr+wq-x_g(q^2+r^2)+y_g(pg-\dot{r})+z_g(pr+\dot{q})]=  \\
+		&[\lambda_{11}\dot{u}+\lambda_{12}\dot{v}+\lambda_{13}\dot{w}+\lambda_{14}\dot{p}+\lambda_{15}\dot{q}+\lambda_{16}\dot{r}] \\ 
+		&+[v_{11}u+\mu_{11}|u|u]+Tcos(\psi)-(P-B)sin(\theta)\text{（x轴轴向力）}
+	\end{align*}
+	\begin{align*}
+		&m[\dot{v}-wp+ur-y_g(r^2+p^2)+z_g(qr-\dot{p})+x_g(pg+\dot{r})]= \\
+		&[\lambda_{21}\dot{u}+\lambda_{22}\dot{v}+\lambda_{23}\dot{w}+\lambda_{24}\dot{p}+\lambda_{25}\dot{q}+\lambda_{26}\dot{r}] \\
+		&+[v_{22}v+\mu_{22}|v|v]+Tcos(\varphi)+(P-B)cos(\theta)sin(\varphi)\text{(y轴轴向力)}
+	\end{align*}
+	\begin{align*}
+		&m[\dot{w}-uq+vp-z_g(p^2+q^2)+x_g(pr-\dot{q})+y_g(qr+\dot{p})]= \\
+		&+[\lambda_{31}\dot{u}+\lambda_{32}\dot{v}+\lambda_{33}\dot{w}+\lambda_{34}\dot{p}+\lambda_{35}\dot{q}+\lambda_{36}\dot{r}] \\
+		&+[v_{33}w+\mu_{33}|w|w]+Tcos(\theta)+(P-B)cos(\theta)cos(\psi)\text{(z轴轴向力)}
+	\end{align*}
+	\begin{align*}
+		&I_x\dot{p}+(I_z-I_y)qr+m[y_g(\dot{w}-uq-vp)-z_g(\dot{v}-wp+ur)]= \\
+		&[\lambda_{41}\dot{u}+\lambda_{42}\dot{v}+\lambda_{43}\dot{w}+\lambda_{44}\dot{p}+\lambda_{45}\dot{q}+\lambda_{46}\dot{r}]
+		+[v_{44}p+\mu_{44}|p|p]\text{(x轴轴向力矩)}
+	\end{align*}	
+	\begin{align*}
+		&I_y\dot{q}+(I_x-I_z)rp+m[z_g(\dot{u}+vr+wq)-x_g(\dot{w}-uq+vp)]= \\
+		&[\lambda_{51}\dot{u}+\lambda_{52}\dot{v}+\lambda_{53}\dot{w}+\lambda_{54}\dot{p}+\lambda_{55}\dot{q}+\lambda_{56}\dot{r}] 
+		+[v_{55}q+\mu_{55}|q|q] \\
+		&+TLcos(\theta)\text{(y轴轴向力矩)}
+	\end{align*}
+	\begin{align*}
+		&I_z\dot{r}+(I_y-I_x)pq+m[x_g(\dot{v}-wp+ur)-y_g(\dot{u}-vr+wq)]= \\
+		&[\lambda_{61}\dot{u}+\lambda_{62}\dot{v}+\lambda_{63}\dot{w}+\lambda_{64}\dot{p}+\lambda_{65}\dot{q}+\lambda_{66}\dot{r}] 
+		+[v_{66}r+\mu_{66}|r|r] \\
+		&-TLcos(\varphi)\text{(z轴轴向力矩)}
+	\end{align*}
+
+	\subsection{AUV水下导航}
+	\subsection*{空间运动模型在导航中的应用}
+	\paragraph{}我们根据控制命令得到推力的大小方向，再结合水动力计算、静力计算（重力浮力），并将结果代入
+				空间运动数学模型中求解，得到AUV本体坐标系中的速度与角速度，通过坐标转换，求解得到大地坐标系中的参数。
+				通过时间的累计，可以大致计算出AUV走过的距离和其姿态。
+\end{document}
